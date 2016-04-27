@@ -1,33 +1,11 @@
 import java.util.*;
-import java.util.Arrays;
-import java.util.Timer;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.image.*;
-import javax.swing.border.*;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
+import javax.swing.border.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  * The first of the Artificial Intelligence programs. This program is meant to be able to do all of the 
@@ -39,8 +17,8 @@ import javax.swing.UIManager;
 public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 {
 	//|||||||||||||||||||||||||||||||||||Class variables and Constructors|||||||||||||||||||||||||||||||||
-	private static int friendship;
-	private static int startupCount;
+	public static int friendship;
+	public static int startupCount;
 
 	/**Default Constructor
 	 * This constructor creates the GUI
@@ -48,22 +26,6 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	Deneb ()
 	{
 		this.mainGUI();
-		int lineNumber = 0;
-		String fileThing = null;
-		File text = new File("c:/Users/Owner/Desktop/textFile.txt");
-		Scanner input;
-		try 
-		{
-			text.createNewFile();
-			input = new Scanner(text);
-			for (int lineNumberCounter = 0; lineNumberCounter <lineNumber && input.hasNextLine(); lineNumberCounter++)
-				fileThing = input.nextLine();
-		}
-
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
 	}
 
 
@@ -79,7 +41,43 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	 */
 	public void mainGUI() 
 	{
-
+		int lineNumber = 0;
+		String fileThing = null;
+		File text = new File("c:/Users/Owner/Desktop/Shared/Startup.txt");
+		Scanner input;
+		try 
+		{
+			text.createNewFile();
+			input = new Scanner(text);
+			for (int lineNumberCounter = 0; lineNumberCounter <= lineNumber && input.hasNextLine(); lineNumberCounter++)
+				friendship = Integer.parseInt(input.nextLine());
+			
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		lineNumber=1;
+	
+		try 
+		{
+			text.createNewFile();
+			input = new Scanner(text);
+			for (int lineNumberCounter = 0; lineNumberCounter <= lineNumber && input.hasNextLine(); lineNumberCounter++)
+				startupCount = Integer.parseInt(input.nextLine());
+			
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		System.out.println(friendship);
+		System.out.println(startupCount);
+		
+		String[] args = null;
+		MainGuiFramework.main(args);
 	}
 
 
@@ -93,9 +91,13 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	 */
 	public void simpleGrammarAnalyzer(String userInput) 
 	{ 
-		if (easterEggDetector()){
+		if (easterEggDetector())
+		{
 			easterEggReturner(userInput);
-		} else if (terminateSequence(userInput)){
+		} 
+		
+		else if (terminateSequence(userInput))
+		{
 
 		} 
 
@@ -113,8 +115,10 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 
 	//If the userInput contians a terminate sequence String, then terminate becomes true, and the program terminates.
 	//Add more test cases.
-	public boolean terminateSequence(String userInput){
-		if (userInput.contains("terminate sequence")){
+	public boolean terminateSequence(String userInput)
+	{
+		if (userInput.contains("terminate sequence"))
+		{
 			return true;
 		}
 		return false;
@@ -153,6 +157,16 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		String easterEgg;
 		easterEgg = EasterEggsDetector.easterEggReturner(userInput);
 		return easterEgg;
+	}
+	
+	public int getFriendship()
+	{
+		return friendship;
+	}
+	
+	public int getStartup()
+	{
+		return startupCount;
 	}
 
 
