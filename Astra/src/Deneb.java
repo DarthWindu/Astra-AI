@@ -37,13 +37,18 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 
 
 	/**
-	 * Put code here to make the GUI
+	 * Startup method. This method starts up the mainGui by calling the main method
+	 * from the MainGuiFrameword class. This is done at the bottom by sending a
+	 * null String[].
+	 * 
+	 * This method also checks the friendship counter and the startup counter.
+	 * It does that by finding the file
 	 */
 	public void mainGUI() 
 	{
 		int lineNumber = 0;
 		String fileThing = null;
-		File text = new File("c:/Users/Owner/Desktop/Shared/Startup.txt");
+		File text = new File("G:/SPRITES/counters.txt");
 		Scanner input;
 		try 
 		{
@@ -51,31 +56,31 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 			input = new Scanner(text);
 			for (int lineNumberCounter = 0; lineNumberCounter <= lineNumber && input.hasNextLine(); lineNumberCounter++)
 				friendship = Integer.parseInt(input.nextLine());
-			
+
 		}
 		catch (Exception ex)
 		{
 			ex.printStackTrace();
 		}
-		
+
 		lineNumber=1;
-	
+
 		try 
 		{
 			text.createNewFile();
 			input = new Scanner(text);
 			for (int lineNumberCounter = 0; lineNumberCounter <= lineNumber && input.hasNextLine(); lineNumberCounter++)
 				startupCount = Integer.parseInt(input.nextLine());
-			
+
 		}
 		catch (Exception ex)
 		{
 			ex.printStackTrace();
 		}
-		
+
 		System.out.println(friendship);
 		System.out.println(startupCount);
-		
+
 		String[] args = null;
 		MainGuiFramework.main(args);
 	}
@@ -95,7 +100,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		{
 			easterEggReturner(userInput);
 		} 
-		
+
 		else if (terminateSequence(userInput))
 		{
 
@@ -158,12 +163,12 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		easterEgg = EasterEggsDetector.easterEggReturner(userInput);
 		return easterEgg;
 	}
-	
+
 	public int getFriendship()
 	{
 		return friendship;
 	}
-	
+
 	public int getStartup()
 	{
 		return startupCount;
