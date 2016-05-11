@@ -50,8 +50,9 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		String fileThing = null;
 		File text = new File("G:/SPRITES/counters.txt");
 		Scanner input;
-		try 
+		/*	try 
 		{
+		
 			text.createNewFile();
 			input = new Scanner(text);
 			for (int lineNumberCounter = 0; lineNumberCounter <= lineNumber && input.hasNextLine(); lineNumberCounter++)
@@ -81,6 +82,8 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		System.out.println(friendship);
 		System.out.println(startupCount);
 
+
+		 */ //Comment is for friendship and stuff. Implement later.
 		String[] args = null;
 		MainGuiFramework.main(args);
 	}
@@ -91,7 +94,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 
 
 	/**Scans for simple signs that could differentiate mathematical equations from strings. 
-	 * 
+	 * Chooses which way to go.
 	 * @param userInput
 	 */
 	public void simpleGrammarAnalyzer(String userInput) 
@@ -103,8 +106,12 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 
 		else if (terminateSequence(userInput))
 		{
-
 		} 
+
+		else if (commandLine(userInput))
+		{
+
+		}
 
 	}
 	//End of simpleGrammarAnalyzer method
@@ -128,6 +135,15 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		}
 		return false;
 	}
+
+	//Detects for command line command words. Uses .equals() method
+	//Also checks for validity of words.
+	//Still WIP
+	public boolean commandLine(String userInput)
+	{
+		return false;	
+	}
+
 
 
 
@@ -164,11 +180,13 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		return easterEgg;
 	}
 
+	//Used to reference friendship counter as necessary
 	public int getFriendship()
 	{
 		return friendship;
 	}
 
+	//Used to reference startupCount as necessary.
 	public int getStartup()
 	{
 		return startupCount;

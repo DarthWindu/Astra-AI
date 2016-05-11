@@ -15,6 +15,7 @@ import java.util.Scanner;
  */
 public class MainGuiFramework extends JFrame {
 
+
 	/**
 	 * Creates new form Chatbox
 	 */
@@ -22,8 +23,8 @@ public class MainGuiFramework extends JFrame {
 		initComponents();
 		this.setTitle("Deneb");
 		String ini = this.chooseInitialSaying();
-		consoleOutputArea.setText(ini);
-		ImageIcon icon = new ImageIcon("g:/SPRITES/deneb.png");
+		consoleOutputArea.setText("Hello, User!");
+		ImageIcon icon = new ImageIcon("g:/SPRITES/5.png");
 		this.setIconImage(icon.getImage());
 	}
 
@@ -34,7 +35,7 @@ public class MainGuiFramework extends JFrame {
 	public String chooseInitialSaying(){
 		int lineNumber =0;
 		String fileThing = null;
-		File text = new File("g:/SPRITES/newFile.txt");
+		File text = new File("g:/SPRITES/Sayings.txt");
 		Scanner input;
 		try 
 		{
@@ -147,11 +148,10 @@ public class MainGuiFramework extends JFrame {
 			 * File location: G:/Downloads/words2.txt
 			 */
 			else if (wordChecker(newText))
-			{//Do nothing
+			{
+				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
+				inputTextArea.setText("");
 			}
-
-
-
 
 			else
 			{
@@ -167,14 +167,17 @@ public class MainGuiFramework extends JFrame {
 
 	/**
 	 * This method checks whether the words are valid or not. This method
-	 * references two different text files 
+	 * references two different text files with words inside them.
 	 * @param needsChecking
 	 * @return false
 	 */
 	public static boolean wordChecker(String needsChecking)
 	{
-		File text = new File("G:/Downloads/words.txt");
-		File text2 = new File("G:/Downloads/words2.txt");
+		File text = new File("G:/words.txt");
+		File text2 = new File("G:/words2.txt");
+
+		boolean wordsExist=false;
+		needsChecking = needsChecking.toLowerCase();
 
 		//Word Splitter method. This method gets each word in the sentence its
 		//own space in an ArrayList of Strings. Then it proceeds to 
@@ -184,16 +187,108 @@ public class MainGuiFramework extends JFrame {
 		{
 			text.createNewFile();
 			text2.createNewFile();
+			//correct the 3rd if statement
+			
+			//This is just to test what string it needsToFind and
+			//What string that still needs checking.
+			System.out.println(needsChecking + "$");
+			
+			
+			//Need to correct the build path.
 
+			for (int counter =0;!needsChecking.isEmpty();counter++)
+			{
+				String needToFind = null;
+				if (needsChecking.contains(" ")){
+					needToFind = needsChecking.substring(0,needsChecking.indexOf(" "));
+					needsChecking = needsChecking.substring(needToFind.length()+1);
+				} 
+				
+				System.out.println(needToFind);
+				
+				if (needsChecking.contains("."))
+				{
+					needToFind = needsChecking.substring(0,needsChecking.indexOf("."));
+					needsChecking = needsChecking.substring(needToFind.length()+1);
+				}
+
+				else if (needsChecking.contains(","))
+				{
+					needToFind = needsChecking.substring(0,needsChecking.indexOf(","));
+					needsChecking = needsChecking.substring(needToFind.length()+1); //here
+				}
+				
+				else if (needsChecking.contains("!"))
+				{
+					needToFind = needsChecking.substring(0,needsChecking.indexOf("!"));
+					needsChecking = needsChecking.substring(needToFind.length()+1);
+				}
+				
+				else if (needsChecking.contains("?"))
+				{
+					needsChecking = needsChecking.replace("?", "");
+					needToFind=needsChecking.substring(0,needsChecking.length());
+					needsChecking = needsChecking.substring(needToFind.length());
+				}
+				else 
+				{
+					needToFind = needsChecking.substring(0,needsChecking.length());
+					needsChecking = needsChecking.substring(needToFind.length());
+				}
+
+				//This is just to test what string it needsToFind and
+				//What string that still needs checking.
+				System.out.println(needToFind + " @ ");
+				System.out.println(needsChecking + "!");
+				
+				Scanner input;
+				Scanner input2;
+				input = new Scanner(text);
+				input2 = new Scanner(text2);
+
+
+				String wordFound = "@";
+				wordsExist = false;
+
+				//Search method 1 - Searches the file. Add binary search here.
+				for (int lineNumber = 0; !wordsExist && input.hasNextLine(); lineNumber++)
+				{
+					wordFound = input.next();
+					if (wordFound.toLowerCase().equals(needToFind))
+					{
+						wordsExist = true;
+					}
+				}
+				
+				
+				//Search method 2 - Searches the file. Add binary search here
+				for (int lineNumber = 0; !wordsExist && input2.hasNextLine(); lineNumber++)
+				{
+					wordFound = input2.next();
+					if (wordFound.toLowerCase().equals(needToFind))
+					{
+						wordsExist = true;
+					}
+				}
+				
+
+
+				input.close();
+				input2.close();
+
+				if(!wordsExist)
+					break;
+
+			}
 
 		}
 		catch (Exception ex)
 		{
 			ex.printStackTrace();
 		}
+		System.out.println(wordsExist);
 
-
-		return false;
+		return wordsExist;
 	}
 
 
