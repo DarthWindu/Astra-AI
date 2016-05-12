@@ -127,7 +127,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 
 	//If the userInput contians a terminate sequence String, then terminate becomes true, and the program terminates.
 	//Add more test cases.
-	public boolean terminateSequence(String userInput)
+	public static boolean terminateSequence(String userInput)
 	{
 		if (userInput.contains("terminate sequence"))
 		{
@@ -139,7 +139,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	//Detects for command line command words. Uses .equals() method
 	//Also checks for validity of words.
 	//Still WIP
-	public boolean commandLine(String userInput)
+	public static boolean commandLine(String userInput)
 	{
 		return false;	
 	}

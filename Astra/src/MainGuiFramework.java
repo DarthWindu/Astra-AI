@@ -130,6 +130,16 @@ public class MainGuiFramework extends JFrame {
 		pack();
 	}// </editor-fold>                        
 
+	
+
+	/**
+	 * Error word checking. This else if statement is to check using a database
+	 * of nearly 600K words (Stored in 2 different text files) that would validate
+	 * whether words are spelled correctly or if words actually exist.
+	 * 
+	 * File location: G:/Downloads/words.txt
+	 * File location: G:/Downloads/words2.txt
+	 */
 	public void btnSendInputActionPerformed(java.awt.event.ActionEvent evt) {                                             
 		// TODO add your handling code here:
 		try
@@ -139,18 +149,15 @@ public class MainGuiFramework extends JFrame {
 			{//Do nothing
 			}
 
-			/**
-			 * Error word checking. This else if statement is to check using a database
-			 * of nearly 600K words (Stored in 2 different text files) that would validate
-			 * whether words are spelled correctly or if words actually exist.
-			 * 
-			 * File location: G:/Downloads/words.txt
-			 * File location: G:/Downloads/words2.txt
-			 */
 			else if (wordChecker(newText))
 			{
 				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
 				inputTextArea.setText("");
+			}
+			
+			else if (Deneb.commandLine(newText))
+			{
+				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
 			}
 
 			else
@@ -161,6 +168,7 @@ public class MainGuiFramework extends JFrame {
 		}
 		catch(Exception e)
 		{       
+			
 		}
 	}                                            
 
@@ -169,7 +177,7 @@ public class MainGuiFramework extends JFrame {
 	 * This method checks whether the words are valid or not. This method
 	 * references two different text files with words inside them.
 	 * @param needsChecking
-	 * @return false
+	 * @return wordsExist
 	 */
 	public static boolean wordChecker(String needsChecking)
 	{
@@ -187,10 +195,7 @@ public class MainGuiFramework extends JFrame {
 		{
 			text.createNewFile();
 			text2.createNewFile();
-			//correct the 3rd if statement
-
-
-			//Need to correct the build path.
+		
 
 			for (int counter =0;!needsChecking.isEmpty();counter++)
 			{
@@ -208,6 +213,7 @@ public class MainGuiFramework extends JFrame {
 					needsChecking = needsChecking.substring(needToFind.length());
 				}
 
+				//if the word we are trying to find has punctuation, call the cutter method.
 				if (punctuation(needToFind))
 				{
 					needToFind = changePunctuations(needToFind);
@@ -266,6 +272,7 @@ public class MainGuiFramework extends JFrame {
 	}
 
 
+	
 	/**
 	 * This method returns true if the string has punctuation of any sort attached to the back of it.
 	 */
