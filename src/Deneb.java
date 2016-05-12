@@ -1,33 +1,11 @@
 import java.util.*;
-import java.util.Arrays;
-import java.util.Timer;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.image.*;
-import javax.swing.border.*;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
+import javax.swing.border.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  * The first of the Artificial Intelligence programs. This program is meant to be able to do all of the 
@@ -39,33 +17,15 @@ import javax.swing.UIManager;
 public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 {
 	//|||||||||||||||||||||||||||||||||||Class variables and Constructors|||||||||||||||||||||||||||||||||
-	private static int friendship;
-	private static int startupCount;
+	public static int friendship;
+	public static int startupCount;
 
 	/**Default Constructor
 	 * This constructor creates the GUI
 	 */
-	Deneb () {
+	Deneb ()
+	{
 		this.mainGUI();
-		
-		int lineNumber = 0;
-		String aaa = null;
-		File text = new File("z:/textFile.txt");
-		Scanner input;
-		try 
-		{
-			input = new Scanner(text);
-			for (int lineNumberCounter = 0; lineNumberCounter <lineNumber && input.hasNextLine(); lineNumberCounter++)
-			{
-				aaa = input.nextLine();
-			}
-
-		}
-
-		catch (Exception ex)
-		{
-			System.out.println("didnt work");
-		}
 	}
 
 
@@ -77,48 +37,80 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 
 
 	/**
-	 * Put code here to make the GUI
+	 * Startup method. This method starts up the mainGui by calling the main method
+	 * from the MainGuiFrameword class. This is done at the bottom by sending a
+	 * null String[].
+	 * 
+	 * This method also checks the friendship counter and the startup counter.
+	 * It does that by finding the file
 	 */
-	public void mainGUI() {
+	public void mainGUI() 
+	{
+		int lineNumber = 0;
+		String fileThing = null;
+		File text = new File("G:/SPRITES/counters.txt");
+		Scanner input;
+		/*	try 
+		{
 		
+			text.createNewFile();
+			input = new Scanner(text);
+			for (int lineNumberCounter = 0; lineNumberCounter <= lineNumber && input.hasNextLine(); lineNumberCounter++)
+				friendship = Integer.parseInt(input.nextLine());
+
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+
+		lineNumber=1;
+
+		try 
+		{
+			text.createNewFile();
+			input = new Scanner(text);
+			for (int lineNumberCounter = 0; lineNumberCounter <= lineNumber && input.hasNextLine(); lineNumberCounter++)
+				startupCount = Integer.parseInt(input.nextLine());
+
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+
+		System.out.println(friendship);
+		System.out.println(startupCount);
+
+
+		 */ //Comment is for friendship and stuff. Implement later.
+		String[] args = null;
+		MainGuiFramework.main(args);
 	}
 
 
 	//Extended analzyers
 	public void complexGrammarAnalyzer(){}
-	public void simpleGrammarAnalyzer() {}
-	public void academiaAnalyzer() {}
-	public void entertainiaAnalyzer() {}
-	public void miscellaniaAnalyzer() {}
-	public void databasiaAnalyzer() {}
-	public void clubsAnalzyer() {}
 
 
 	/**Scans for simple signs that could differentiate mathematical equations from strings. 
-	 * 
+	 * Chooses which way to go.
 	 * @param userInput
 	 */
 	public void simpleGrammarAnalyzer(String userInput) 
-	{
-		//[P] What is the purpose of String ref. Initializations in ln 57-61
-		//[J] I don't really need all different strings. I just made them because I could.
-		String academiaString;
+	{ 
+		if (easterEggDetector())
+		{
+			easterEggReturner(userInput);
+		} 
 
-		final String space = " ";
-		final String no_content = "";
+		else if (terminateSequence(userInput))
+		{
+		} 
 
-		//[P] Question ln 65-74: what happens if there are multiple operations? E.x 4+3+1-4*6 
-		//[J] Good question. You we should make a loop structure that takes the first and returns another, edits the string.
-		//[J] then it continues with the string until all are completed.
-		academiaString = userInput.replaceAll(space,no_content);
-		if (academiaString.contains("+")){
-			this.addition();
-		} else if (academiaString.contains("-")){
-			this.subtraction();
-		} else if (academiaString.contains("*")){
-			this.multiplication();
-		} else if (academiaString.contains("/")){
-			this.division();
+		else if (commandLine(userInput))
+		{
+
 		}
 
 	}
@@ -132,41 +124,72 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 	//|||||||||||||||||||||||||||||||||||Methods|||||||||||||||||||||||||||||||||||||||||||||||||||
 
-	public void startup(){
-		
-	}
-	
-	
-	public long addition()
+
+	//If the userInput contians a terminate sequence String, then terminate becomes true, and the program terminates.
+	//Add more test cases.
+	public static boolean terminateSequence(String userInput)
 	{
-		Academia.addition();
-		return 0;//RETURN STATEMENT ONLY TO PREVENT RUN ERROR
+		if (userInput.contains("terminate sequence"))
+		{
+			return true;
+		}
+		return false;
 	}
 
-	public long subtraction(){
-		return 0;
+	//Detects for command line command words. Uses .equals() method
+	//Also checks for validity of words.
+	//Still WIP
+	public static boolean commandLine(String userInput)
+	{
+		return false;	
 	}
 
-	public long multiplication(){
-		return 0;
+
+
+
+	//Cuts the initial Deneb off of the userInput to make it easier to comprehend.
+	public String subStringCutter(String userInput)
+	{
+		while (userInput.substring(0,7).equals("Deneb, ") || userInput.substring(0,6).equals("Deneb "))
+		{
+			if (userInput.substring(0,7).equals("Deneb, "))
+				userInput = userInput.substring(0,7);
+			else 
+				userInput = userInput.substring(0,6);
+		}
+		return userInput;
 	}
 
-	public double division(){
-		return 0;
+
+	//calls to EasterEggsDetector
+	public static boolean easterEggDetector()
+	{
+		if (EasterEggsDetector.easterEggDetector())
+		{
+			return true;
+		}
+
+		return false;
 	}
 
-	public void roots() {
+	//calls to EasterEggsDetector
+	public static String easterEggReturner(String userInput)
+	{
+		String easterEgg;
+		easterEgg = EasterEggsDetector.easterEggReturner(userInput);
+		return easterEgg;
 	}
 
-	public double square(){
-		return 0;
+	//Used to reference friendship counter as necessary
+	public int getFriendship()
+	{
+		return friendship;
 	}
 
-	public int power() {
-		return 0;
-	}
-
-	public void algebraCalculator() {
+	//Used to reference startupCount as necessary.
+	public int getStartup()
+	{
+		return startupCount;
 	}
 
 
@@ -185,8 +208,6 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	public static void main(String [] args)
 	{
 		Deneb deneb = new Deneb();
-
 	}
-
 
 }

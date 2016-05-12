@@ -24,7 +24,7 @@ public class tempoDeneb
 		int counter = 0;
 		try {
 			Scanner input = new Scanner(System.in);
-			File file = new File("c:/Users/Owner/Desktop/tournamentPoints.txt");
+			File file = new File("g:/SPRITES/newFile.txt");
 			input = new Scanner(file);
 
 			while (input.hasNextLine()) {
@@ -140,7 +140,7 @@ public class tempoDeneb
 	{
 		returnList();
 		formatList();
-		String filePath = "c:/Users/Owner/Desktop/newFile.txt";
+		String filePath = "g:/Points.txt";
 		File file = new File(filePath);
 
 		try{
@@ -153,7 +153,6 @@ public class tempoDeneb
 			String path = file.getCanonicalPath();
 			FileWriter fw = new FileWriter(path);
 			BufferedWriter bw = new BufferedWriter(fw);
-			System.out.println(path);
 			for (int i = 0; i< finalStrings.size();i++){
 				String calculate = finalStrings.get(i)+ " got "+Databasia.calculateLargeBrackets(i, finalStrings.size(), finalStrings.get(i));
 				System.out.println(calculate);
