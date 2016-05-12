@@ -188,12 +188,8 @@ public class MainGuiFramework extends JFrame {
 			text.createNewFile();
 			text2.createNewFile();
 			//correct the 3rd if statement
-			
-			//This is just to test what string it needsToFind and
-			//What string that still needs checking.
-			System.out.println(needsChecking + "$");
-			
-			
+
+
 			//Need to correct the build path.
 
 			for (int counter =0;!needsChecking.isEmpty();counter++)
@@ -202,45 +198,26 @@ public class MainGuiFramework extends JFrame {
 				if (needsChecking.contains(" ")){
 					needToFind = needsChecking.substring(0,needsChecking.indexOf(" "));
 					needsChecking = needsChecking.substring(needToFind.length()+1);
+					System.out.println(needToFind + "+++");
+					System.out.println(needsChecking+ "---");
 				} 
-				
-				System.out.println(needToFind);
-				
-				if (needsChecking.contains("."))
-				{
-					needToFind = needsChecking.substring(0,needsChecking.indexOf("."));
-					needsChecking = needsChecking.substring(needToFind.length()+1);
-				}
 
-				else if (needsChecking.contains(","))
-				{
-					needToFind = needsChecking.substring(0,needsChecking.indexOf(","));
-					needsChecking = needsChecking.substring(needToFind.length()+1); //here
-				}
-				
-				else if (needsChecking.contains("!"))
-				{
-					needToFind = needsChecking.substring(0,needsChecking.indexOf("!"));
-					needsChecking = needsChecking.substring(needToFind.length()+1);
-				}
-				
-				else if (needsChecking.contains("?"))
-				{
-					needsChecking = needsChecking.replace("?", "");
-					needToFind=needsChecking.substring(0,needsChecking.length());
-					needsChecking = needsChecking.substring(needToFind.length());
-				}
 				else 
 				{
 					needToFind = needsChecking.substring(0,needsChecking.length());
 					needsChecking = needsChecking.substring(needToFind.length());
 				}
 
+				if (punctuation(needToFind))
+				{
+					needToFind = changePunctuations(needToFind);
+				}
+
 				//This is just to test what string it needsToFind and
 				//What string that still needs checking.
 				System.out.println(needToFind + " @ ");
 				System.out.println(needsChecking + "!");
-				
+
 				Scanner input;
 				Scanner input2;
 				input = new Scanner(text);
@@ -259,8 +236,8 @@ public class MainGuiFramework extends JFrame {
 						wordsExist = true;
 					}
 				}
-				
-				
+
+
 				//Search method 2 - Searches the file. Add binary search here
 				for (int lineNumber = 0; !wordsExist && input2.hasNextLine(); lineNumber++)
 				{
@@ -271,11 +248,8 @@ public class MainGuiFramework extends JFrame {
 					}
 				}
 				
-
-
 				input.close();
 				input2.close();
-
 				if(!wordsExist)
 					break;
 
@@ -292,7 +266,40 @@ public class MainGuiFramework extends JFrame {
 	}
 
 
+	/**
+	 * This method returns true if the string has punctuation of any sort attached to the back of it.
+	 */
+	public static boolean punctuation(String needsChecking)
+	{
+		if (needsChecking.substring(needsChecking.length()-1).equals("."))		
+		{
+			return true;
+		} else if (needsChecking.substring(needsChecking.length()-1).equals(","))
+		{
+			return true;
+		} else if (needsChecking.substring(needsChecking.length()-1).equals("!"))
+		{
+			return true;
+		} else if (needsChecking.substring(needsChecking.length()-1).equals("?"))
+		{
+			return true;
+		} else if (needsChecking.substring(needsChecking.length()-1).equals(";"))
+		{
+			return true;
+		}
 
+		return false;
+
+	}
+
+	/**
+	 * punctuation cutter. Cuts punctuation off of any unsuspecting Strings that have gotten lax.
+	 */
+	public static String changePunctuations(String needsWork)
+	{
+		needsWork = needsWork.substring(0,needsWork.length()-1);
+		return needsWork;
+	}
 
 	/**
 	 * @param args the command line arguments
