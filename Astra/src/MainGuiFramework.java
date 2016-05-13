@@ -158,6 +158,8 @@ public class MainGuiFramework extends JFrame {
 			else if (Deneb.commandLine(newText))
 			{
 				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
+				inputTextArea.setText("");
+				Deneb.executeCommandLine(newText);
 			}
 
 			else

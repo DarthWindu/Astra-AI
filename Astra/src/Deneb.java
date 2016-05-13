@@ -19,6 +19,8 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	//|||||||||||||||||||||||||||||||||||Class variables and Constructors|||||||||||||||||||||||||||||||||
 	public static int friendship;
 	public static int startupCount;
+	ArrayList <String> commandsList = new ArrayList();
+	
 
 	/**Default Constructor
 	 * This constructor creates the GUI
@@ -84,8 +86,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 
 
 		 */ //Comment is for friendship and stuff. Implement later.
-		String[] args = null;
-		MainGuiFramework.main(args);
+		
 	}
 
 
@@ -124,8 +125,25 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 	//|||||||||||||||||||||||||||||||||||Methods|||||||||||||||||||||||||||||||||||||||||||||||||||
 
+	
+	/*
+	 * List of Commands
+	 *  /Commands
+	 *  /Search (GOOGLE)
+	 *  /Calculate (MATHEMATICS)
+	 *  /CalculateTB (BRACKETS CHALLONGE)
+	 *  /Terminate (CLOSE)
+	 *  /Define (GOOGLE DEF?)
+	 *  /Open (URL)
+	 */
+	
+	//Still WIP
+	public static String executeCommandLine(String userInput)
+	{
+		return null;
+	}
 
-	//If the userInput contians a terminate sequence String, then terminate becomes true, and the program terminates.
+	//If the userInput contains a terminate sequence String, then terminate becomes true, and the program terminates.
 	//Add more test cases.
 	public static boolean terminateSequence(String userInput)
 	{
@@ -141,7 +159,10 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	//Still WIP
 	public static boolean commandLine(String userInput)
 	{
-		return false;	
+		if (userInput.substring(0,1).equals("/"))
+		{
+			for 
+		}
 	}
 
 
@@ -191,7 +212,23 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	{
 		return startupCount;
 	}
-
+	
+	
+	/**
+	 * Adds the commands into an ArrayList. Should be called at startup.
+	 * It could easily be initialized, but I put it in it's separate
+	 * method in order to easily add and subtract commands.
+	 */
+	public void commandLineStartup()
+	{
+		commandsList.add("/commands");
+		commandsList.add("/search");
+		commandsList.add("/calculate");
+		commandsList.add("/calculatetb");
+		commandsList.add("/define");
+		commandsList.add("/terminate");
+		commandsList.add("/open");
+	}
 
 	//|||||||||||||||||||||||||||||||||||||||||||||End of Methods||||||||||||||||||||||||||||||||||||||||||
 	//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -208,6 +245,9 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	public static void main(String [] args)
 	{
 		Deneb deneb = new Deneb();
+		
+		args = null;
+		MainGuiFramework.main(args);
 	}
 
 }
