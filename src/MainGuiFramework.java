@@ -35,7 +35,7 @@ public class MainGuiFramework extends JFrame {
 	public String chooseInitialSaying(){
 		int lineNumber =0;
 		String fileThing = null;
-		File text = new File("./res/Sayings.txt");
+		File text = new File("g:/SPRITES/Sayings.txt");
 		Scanner input;
 		try 
 		{
@@ -155,10 +155,12 @@ public class MainGuiFramework extends JFrame {
 				inputTextArea.setText("");
 			}
 			
-			else if (Deneb.commandLine(newText))
+			/*else if (Deneb.commandLine(newText))
 			{
 				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
-			}
+				inputTextArea.setText("");
+				Deneb.executeCommandLine(newText);
+			}*/
 
 			else
 			{
