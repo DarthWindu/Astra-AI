@@ -15,11 +15,15 @@ public class ImpBCD extends BCD{
 
 	ImpBCD(int[] bcdDigits) {
 		super(bcdDigits);
+		decPlace = 0;
+		isNegative = false;
 		// TODO Auto-generated constructor stub
 	}
 
 	ImpBCD(int num) {
 		super(num);
+		decPlace = 0;
+		isNegative = false;
 		// TODO Auto-generated constructor stub
 	}
 
