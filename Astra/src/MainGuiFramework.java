@@ -157,9 +157,31 @@ public class MainGuiFramework extends JFrame {
 			
 			else if (Deneb.commandLine(newText))
 			{
+				System.out.println("W");
 				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
 				inputTextArea.setText("");
-				Deneb.executeCommandLine(newText);
+				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: "+ Deneb.executeCommandLine(newText));
+				if (newText.equals("/commands"))
+				{
+					consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb:\n/commands shows a list of commands,"
+							+"\n/search <insert what you want to search> will bring up a google search,"
+							+"\n/calculate <insert number [operand] number> will work as a four function"
+							+"\n/calculatetb will calculate brackets in the notepad and post results in a new one."
+							+"\n/terminate will close out of the programs"
+							+"\n/define <insert word/words> will bring up a google search for the define"
+							+"\n/open <URL> opens that URL");
+				}
+				else if(newText.equals("/terminate"))
+				{
+					this.setVisible(false);
+					System.out.println(" **** ");
+				}
+			}
+			
+			else if (newText.substring(0,1).equals("/"))
+			{
+				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: I'm sorry, \""+newText+"\" is invalid in my databanks. Try \"/commands\" for a list of commands.");
+				inputTextArea.setText("");
 			}
 
 			else
@@ -198,15 +220,14 @@ public class MainGuiFramework extends JFrame {
 			text.createNewFile();
 			text2.createNewFile();
 		
-
+			//needToFind is the string that is needed to be found
+			//needsChecking is the string that has been unchecked and will be checked later.
 			for (int counter =0;!needsChecking.isEmpty();counter++)
 			{
 				String needToFind = null;
 				if (needsChecking.contains(" ")){
 					needToFind = needsChecking.substring(0,needsChecking.indexOf(" "));
 					needsChecking = needsChecking.substring(needToFind.length()+1);
-					System.out.println(needToFind + "+++");
-					System.out.println(needsChecking+ "---");
 				} 
 
 				else 
@@ -223,8 +244,8 @@ public class MainGuiFramework extends JFrame {
 
 				//This is just to test what string it needsToFind and
 				//What string that still needs checking.
-				System.out.println(needToFind + " @ ");
-				System.out.println(needsChecking + "!");
+				//System.out.println(needToFind + " @ ");
+				//System.out.println(needsChecking + "!");
 
 				Scanner input;
 				Scanner input2;
@@ -268,7 +289,7 @@ public class MainGuiFramework extends JFrame {
 		{
 			ex.printStackTrace();
 		}
-		System.out.println(wordsExist);
+		//System.out.println(wordsExist);
 
 		return wordsExist;
 	}

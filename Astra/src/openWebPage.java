@@ -16,16 +16,54 @@ public class openWebPage {
 	//https://www.google.com/#q=does+googles+url+stay+the+same
 	//^^Example of a google search URL.^^
 	
+	
+
+	//A minor error found in string checking: if the string contains a + sign without
+	//spaces between the two numbers, it will end up searching wtihout a + sign.
 	/**
 	 * This method is to generate a google search URL to make searching easier to do.
 	 * @param userInput
 	 * @return
 	 */
-	public static String googleUrlGenerator(String userInput)
+	public static String googleSearch(String userInput)
 	{
+		userInput = userInput.replaceAll("/search ", "");
 		userInput = userInput.replaceAll(" ", "+");
 		String googleUrl = "https://www.google.com/#q=" + userInput;
-		return googleUrl;
+		openWebpage(googleUrl);
+		return null;
+	}
+	
+	/**
+	 * Defines a word using google search (I got a little bit lazy.)
+	 * @param userInput
+	 * @return
+	 */
+	public static String googleDefine(String userInput)
+	{
+		userInput = userInput.replaceAll("/define ", "define ");
+		userInput = userInput.replaceAll(" ", "+");
+		String googleUrl = "https://www.google.com/#q=" + userInput;
+		openWebpage(googleUrl);
+		return null;
+	}
+	
+	/**
+	 * Generates a generic http://
+	 * Can be upgraded later.
+	 * @param userInput
+	 */
+	public static void urlGenerator(String userInput)
+	{
+		userInput = userInput.replaceAll("/open ", "");
+		
+		if (userInput.substring(0,7).equals("http://"))
+		{
+			openWebpage(userInput);
+		} else {
+			userInput = "http://" +userInput;
+			openWebpage(userInput);
+		}
 	}
 	
 	
@@ -41,12 +79,13 @@ public class openWebPage {
 			openWebpage(userUrl);
 		} catch (Exception E)
 		{
-			
+			E.printStackTrace();
 		}
 	}
 	public static void main(String[] args) {
 		//openWebpage("http://google.com"); //Opens up google's home page.
 		//openWebpage(googleUrlGenerator("What is the best coding language?"));  //Opens up "What is the best coding language in google
-		openSpecificWebpage("htp://google.com");
+		//openSpecificWebpage("http://google.com");
+		
 	}
 }
