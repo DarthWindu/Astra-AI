@@ -1,3 +1,4 @@
+package alphaComponents;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,7 +24,8 @@ public class MainGuiFramework extends JFrame {
 		initComponents();
 		this.setTitle("Deneb");
 		String ini = this.chooseInitialSaying();
-		consoleOutputArea.setText("Hello, User!");
+		consoleOutputArea.setText("Hello, " + System.getProperty("user.name") + "!");
+		//Add Default Config
 		ImageIcon icon = new ImageIcon("g:/SPRITES/5.png");
 		this.setIconImage(icon.getImage());
 	}
@@ -35,7 +37,7 @@ public class MainGuiFramework extends JFrame {
 	public String chooseInitialSaying(){
 		int lineNumber =0;
 		String fileThing = null;
-		File text = new File("g:/SPRITES/Sayings.txt");
+		File text = new File("./lib/Sayings.txt");
 		Scanner input;
 		try 
 		{
