@@ -19,7 +19,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	//|||||||||||||||||||||||||||||||||||Class variables and Constructors|||||||||||||||||||||||||||||||||
 	public static int friendship;
 	public static int startupCount;
-	ArrayList <String> commandsList = new ArrayList();
+	static ArrayList <String> commandsList = new ArrayList();
 	
 
 	/**Default Constructor
@@ -138,8 +138,38 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	 */
 	
 	//Still WIP
-	public static String executeCommandLine(String userInput)
+	//This should technically be void, because the commands are going in not to return anything. However,
+	//Some will return stuff, like calculate. Figure out how to implement
+	//WIP
+	public static ArrayList<String> executeCommandLine(String userInput)
 	{
+		if (userInput.equals("/commands"))
+		{
+			return commandsList;
+		} else if (userInput.substring(0,userInput.indexOf(" ")).equals("/search"))
+		{
+			openWebPage.googleSearch(userInput);
+		} else if (userInput.equals("/Calculate"))
+		{
+			//return Academia.figureOutCalculation(userInput);
+		} else if (userInput.equals("/CalculateTB"))
+		{	
+			String [] args = null;
+			tempoDeneb.main(args);
+		} else if (userInput.equals("/terminate"))
+		{
+			return null;
+		} else if (userInput.substring(0, userInput.indexOf(" ")).equals("/define"))
+		{
+			openWebPage.googleDefine(userInput);
+		} else if (userInput.substring(0, userInput.indexOf(" ")).equals("/open"))
+		{
+			openWebPage.urlGenerator(userInput);
+		} else
+		{
+			
+		}
+		
 		return null;
 	}
 
@@ -156,13 +186,28 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 
 	//Detects for command line command words. Uses .equals() method
 	//Also checks for validity of words.
-	//Still WIP
 	public static boolean commandLine(String userInput)
 	{
+	
+		if (userInput.equals("/commands"))
+		{
+			return true;
+		}
+		
 		if (userInput.substring(0,1).equals("/"))
 		{
-			for 
+			for (String item: commandsList)
+			{
+				if (userInput.substring(0,userInput.indexOf(" ")).equals(item))
+				{
+					return true;
+				}
+			}
 		}
+		
+		System.out.println(userInput);
+		
+		return false;
 	}
 
 
@@ -245,7 +290,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	public static void main(String [] args)
 	{
 		Deneb deneb = new Deneb();
-		
+		deneb.commandLineStartup();
 		args = null;
 		MainGuiFramework.main(args);
 	}
