@@ -6,6 +6,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 /**
  * Outside resources were used.
@@ -15,7 +16,8 @@ import java.util.Scanner;
  */
 public class MainGuiFramework extends JFrame {
 
-
+	static ArrayList <String> commandsList = new ArrayList();
+	static double answer;
 	/**
 	 * Creates new form Chatbox
 	 */
@@ -24,7 +26,7 @@ public class MainGuiFramework extends JFrame {
 		this.setTitle("Deneb");
 		String ini = this.chooseInitialSaying();
 		consoleOutputArea.setText("Hello, User!");
-		ImageIcon icon = new ImageIcon("g:/SPRITES/5.png");
+		ImageIcon icon = new ImageIcon("./res/Denebhead.png");
 		this.setIconImage(icon.getImage());
 	}
 
@@ -35,7 +37,7 @@ public class MainGuiFramework extends JFrame {
 	public String chooseInitialSaying(){
 		int lineNumber =0;
 		String fileThing = null;
-		File text = new File("g:/SPRITES/Sayings.txt");
+		File text = new File("./lib/Sayings.txt");
 		Scanner input;
 		try 
 		{
@@ -90,7 +92,7 @@ public class MainGuiFramework extends JFrame {
 			}
 		});
 
-		ImageIcon im = new ImageIcon("g:/SPRITES/Deneb2.png");
+		ImageIcon im = new ImageIcon("./res/DenebSpriteIdle.jpg");
 		pictureLabel.setIcon(im); // NOI18N
 		pictureLabel.setToolTipText("");
 		pictureLabel.setName(""); // NOI18N
@@ -155,14 +157,17 @@ public class MainGuiFramework extends JFrame {
 				inputTextArea.setText("");
 			}
 			
+
+			
 			else if (Deneb.commandLine(newText))
 			{
-				System.out.println("W");
 				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
 				inputTextArea.setText("");
-				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: "+ Deneb.executeCommandLine(newText));
+				Deneb.executeCommandLine(newText);
+				
 				if (newText.equals("/commands"))
 				{
+					consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: " + commandsList);
 					consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb:\n/commands shows a list of commands,"
 							+"\n/search <insert what you want to search> will bring up a google search,"
 							+"\n/calculate <insert number [operand] number> will work as a four function"
@@ -171,14 +176,22 @@ public class MainGuiFramework extends JFrame {
 							+"\n/define <insert word/words> will bring up a google search for the define"
 							+"\n/open <URL> opens that URL");
 				}
+				else if (newText.substring(0,10).equals("/calculate"))
+				{
+					System.out.println(answer);
+				}
+				
 				else if(newText.equals("/terminate"))
 				{
-					this.setVisible(false);
 					System.out.println(" **** ");
+					this.dispose();
+					this.setVisible(false);
+					
 				}
 			}
 			
-			else if (newText.substring(0,1).equals("/"))
+
+			else if (Deneb.commandLine(newText) == false)
 			{
 				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: I'm sorry, \""+newText+"\" is invalid in my databanks. Try \"/commands\" for a list of commands.");
 				inputTextArea.setText("");
@@ -205,8 +218,8 @@ public class MainGuiFramework extends JFrame {
 	 */
 	public static boolean wordChecker(String needsChecking)
 	{
-		File text = new File("G:/words.txt");
-		File text2 = new File("G:/words2.txt");
+		File text = new File("./res/words.txt");
+		File text2 = new File("./res/words2.txt");
 
 		boolean wordsExist=false;
 		needsChecking = needsChecking.toLowerCase();
@@ -230,6 +243,8 @@ public class MainGuiFramework extends JFrame {
 					needsChecking = needsChecking.substring(needToFind.length()+1);
 				} 
 
+			
+				
 				else 
 				{
 					needToFind = needsChecking.substring(0,needsChecking.length());
@@ -301,22 +316,25 @@ public class MainGuiFramework extends JFrame {
 	 */
 	public static boolean punctuation(String needsChecking)
 	{
-		if (needsChecking.substring(needsChecking.length()-1).equals("."))		
-		{
-			return true;
-		} else if (needsChecking.substring(needsChecking.length()-1).equals(","))
-		{
-			return true;
-		} else if (needsChecking.substring(needsChecking.length()-1).equals("!"))
-		{
-			return true;
-		} else if (needsChecking.substring(needsChecking.length()-1).equals("?"))
-		{
-			return true;
-		} else if (needsChecking.substring(needsChecking.length()-1).equals(";"))
-		{
-			return true;
+		if (needsChecking.length()>0){
+			if (needsChecking.substring(needsChecking.length()-1).equals("."))		
+			{
+				return true;
+			} else if (needsChecking.substring(needsChecking.length()-1).equals(","))
+			{
+				return true;
+			} else if (needsChecking.substring(needsChecking.length()-1).equals("!"))
+			{
+				return true;
+			} else if (needsChecking.substring(needsChecking.length()-1).equals("?"))
+			{
+				return true;
+			} else if (needsChecking.substring(needsChecking.length()-1).equals(";"))
+			{
+				return true;
+			}
 		}
+		
 
 		return false;
 
@@ -331,6 +349,24 @@ public class MainGuiFramework extends JFrame {
 		return needsWork;
 	}
 
+	//Sets commands. Called from deneb.
+	public static void setCommands()
+	{
+		commandsList.add("/commands");
+		commandsList.add("/search");
+		commandsList.add("/calculate");
+		commandsList.add("/calculatetb");
+		commandsList.add("/define");
+		commandsList.add("/terminate");
+		commandsList.add("/open");
+	}
+
+	//sets answer variable. Called from Deneb.
+	public static void setAnswer(double ans)
+	{
+		answer = ans;
+	}
+	
 	/**
 	 * @param args the command line arguments
 	 */

@@ -3,8 +3,16 @@ public class Academia {
 	//Implement BCD here
 	public static double addition(String userInput)
 	{
-		
-		return 0;
+		String firstChunk = userInput.substring(0,userInput.indexOf("+"));
+		String secondChunk = userInput.substring(userInput.indexOf("+")+1);
+		System.out.println(firstChunk);
+		System.out.println(secondChunk);
+		double FirstNumber =  
+		double SecondNumber = Double.parseDouble(secondChunk);
+		System.out.println(Double.parseDouble(firstChunk));
+		System.out.println(SecondNumber);
+		double next = FirstNumber + SecondNumber;
+		return next;
 	}
 	public static double subtraction(String userInput)
 	{

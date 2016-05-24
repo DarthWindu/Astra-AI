@@ -50,7 +50,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	{
 		int lineNumber = 0;
 		String fileThing = null;
-		File text = new File("G:/SPRITES/counters.txt");
+		File text = new File("./res/counters.txt");
 		Scanner input;
 		/*	try 
 		{
@@ -141,36 +141,50 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	//This should technically be void, because the commands are going in not to return anything. However,
 	//Some will return stuff, like calculate. Figure out how to implement
 	//WIP
-	public static ArrayList<String> executeCommandLine(String userInput)
+	public static void executeCommandLine(String userInput)
 	{
+	
+		
+		
 		if (userInput.equals("/commands"))
 		{
-			return commandsList;
-		} else if (userInput.substring(0,userInput.indexOf(" ")).equals("/search"))
+			MainGuiFramework.setCommands();
+		} 
+		
+		else if (userInput.equals("/terminate"))
 		{
-			openWebPage.googleSearch(userInput);
-		} else if (userInput.equals("/Calculate"))
-		{
-			//return Academia.figureOutCalculation(userInput);
-		} else if (userInput.equals("/CalculateTB"))
+	
+		}	
+		else if (userInput.equals("/calculatetb"))
 		{	
 			String [] args = null;
 			tempoDeneb.main(args);
-		} else if (userInput.equals("/terminate"))
+		}
+		else if (userInput.substring(0,userInput.indexOf(" ")).equals("/search"))
 		{
-			return null;
-		} else if (userInput.substring(0, userInput.indexOf(" ")).equals("/define"))
+			openWebPage.googleSearch(userInput);
+		}
+	 
+		else if (userInput.substring(0,userInput.indexOf(" ")).equals("/calculate"))
+		{
+			System.out.println("YES");
+			double answer = Academia.figureOutCalculation(userInput);
+			MainGuiFramework.setAnswer(answer);
+		} 
+
+		else if (userInput.substring(0, userInput.indexOf(" ")).equals("/define"))
 		{
 			openWebPage.googleDefine(userInput);
-		} else if (userInput.substring(0, userInput.indexOf(" ")).equals("/open"))
+		}
+		else if (userInput.substring(0, userInput.indexOf(" ")).equals("/open"))
 		{
 			openWebPage.urlGenerator(userInput);
-		} else
+		} 
+		else
 		{
 			
 		}
 		
-		return null;
 	}
 
 	//If the userInput contains a terminate sequence String, then terminate becomes true, and the program terminates.
@@ -188,8 +202,13 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	//Also checks for validity of words.
 	public static boolean commandLine(String userInput)
 	{
-	
+
 		if (userInput.equals("/commands"))
+		{
+			return true;
+		}
+		
+		if (userInput.equals("/terminate"))
 		{
 			return true;
 		}
@@ -198,14 +217,22 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		{
 			for (String item: commandsList)
 			{
-				if (userInput.substring(0,userInput.indexOf(" ")).equals(item))
+				
+				if(userInput.contains(" "))
 				{
-					return true;
+					if (userInput.substring(0,userInput.indexOf(" ")).equals(item))
+					{
+						return true;
+					}
+				} else {
+					if (userInput.equals(item))
+					{
+						return true;
+					}
 				}
+				
 			}
 		}
-		
-		System.out.println(userInput);
 		
 		return false;
 	}
