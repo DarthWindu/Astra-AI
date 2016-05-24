@@ -24,7 +24,7 @@ public class tempoDeneb
 		int counter = 0;
 		try {
 			Scanner input = new Scanner(System.in);
-			File file = new File("g:/SPRITES/newFile.txt");
+			File file = new File("./lib/newFile.txt");
 			input = new Scanner(file);
 
 			while (input.hasNextLine()) {
@@ -140,7 +140,7 @@ public class tempoDeneb
 	{
 		returnList();
 		formatList();
-		String filePath = "g:/Points.txt";
+		String filePath = "./res/Points.txt";
 		File file = new File(filePath);
 
 		try{

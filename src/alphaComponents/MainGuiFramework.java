@@ -1,3 +1,4 @@
+package alphaComponents;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,7 +7,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Scanner;
 /**
  * Outside resources were used.
@@ -16,9 +16,7 @@ import java.util.Scanner;
  */
 public class MainGuiFramework extends JFrame {
 
-	static ArrayList <String> commandsList = new ArrayList();
-	static double answer;
-	static int friendship;
+
 	/**
 	 * Creates new form Chatbox
 	 */
@@ -26,8 +24,9 @@ public class MainGuiFramework extends JFrame {
 		initComponents();
 		this.setTitle("Deneb");
 		String ini = this.chooseInitialSaying();
-		consoleOutputArea.setText(ini);
-		ImageIcon icon = new ImageIcon("./res/Denebhead.png");
+		consoleOutputArea.setText("Hello, " + System.getProperty("user.name") + "!");
+		//Add Default Config
+		ImageIcon icon = new ImageIcon("g:/SPRITES/5.png");
 		this.setIconImage(icon.getImage());
 	}
 
@@ -36,7 +35,7 @@ public class MainGuiFramework extends JFrame {
 	 * Code for choosing what initial saying
 	 */
 	public String chooseInitialSaying(){
-		int lineNumber = friendship;
+		int lineNumber =0;
 		String fileThing = null;
 		File text = new File("./lib/Sayings.txt");
 		Scanner input;
@@ -93,7 +92,7 @@ public class MainGuiFramework extends JFrame {
 			}
 		});
 
-		ImageIcon im = new ImageIcon("./res/DenebSpriteOne.png");
+		ImageIcon im = new ImageIcon("g:/SPRITES/Deneb2.png");
 		pictureLabel.setIcon(im); // NOI18N
 		pictureLabel.setToolTipText("");
 		pictureLabel.setName(""); // NOI18N
@@ -140,9 +139,8 @@ public class MainGuiFramework extends JFrame {
 	 * of nearly 600K words (Stored in 2 different text files) that would validate
 	 * whether words are spelled correctly or if words actually exist.
 	 * 
-	 * File location home: G:/Downloads/words.txt
-	 * File location home: G:/Downloads/words2.txt
-	 * File location project: ./res/words.txt and ./res/words2.txt
+	 * File location: G:/Downloads/words.txt
+	 * File location: G:/Downloads/words2.txt
 	 */
 	public void btnSendInputActionPerformed(java.awt.event.ActionEvent evt) {                                             
 		// TODO add your handling code here:
@@ -157,54 +155,14 @@ public class MainGuiFramework extends JFrame {
 			{
 				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
 				inputTextArea.setText("");
-				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: "+Deneb.simpleActivator(newText));
-
-				ImageIcon im = new ImageIcon("./res/DenebSpriteIdle.jpg");
-				pictureLabel.setIcon(im);
 			}
 			
-			
-			else if (Deneb.commandLine(newText))
+			/*else if (Deneb.commandLine(newText))
 			{
 				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
 				inputTextArea.setText("");
 				Deneb.executeCommandLine(newText);
-				
-				if (newText.equals("/commands"))
-				{
-					ImageIcon im = new ImageIcon("./res/DenebSpriteThinking.jpg");
-					pictureLabel.setIcon(im);
-					ImageIcon icon = new ImageIcon("./res/DenebSpriteThinking.png");
-					this.setIconImage(icon.getImage());
-					consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: " + commandsList);
-					consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb:\n/commands shows a list of commands,"
-							+"\n/search <insert what you want to search> will bring up a google search,"
-							+"\n/calculate <insert number [operand] number> will work as a four function"
-							+"\n/calculatetb will calculate brackets in the notepad and post results in a new one."
-							+"\n/terminate will close out of the programs"
-							+"\n/define <insert word/words> will bring up a google search for the define"
-							+"\n/open <URL> opens that URL");
-				}
-				else if (newText.substring(0,10).equals("/calculate"))
-				{
-					System.out.println(answer);
-				}
-				
-				else if(newText.equals("/terminate"))
-				{
-					System.out.println(" **** ");
-					this.dispose();
-					this.setVisible(false);
-					
-				}
-			}
-			
-
-			else if (Deneb.commandLine(newText) == false)
-			{
-				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: I'm sorry, \""+newText+"\" is invalid in my databanks. Try \"/commands\" for a list of commands.");
-				inputTextArea.setText("");
-			}
+			}*/
 
 			else
 			{
@@ -227,8 +185,8 @@ public class MainGuiFramework extends JFrame {
 	 */
 	public static boolean wordChecker(String needsChecking)
 	{
-		File text = new File("./res/words.txt");
-		File text2 = new File("./res/words2.txt");
+		File text = new File("G:/words.txt");
+		File text2 = new File("G:/words2.txt");
 
 		boolean wordsExist=false;
 		needsChecking = needsChecking.toLowerCase();
@@ -242,18 +200,17 @@ public class MainGuiFramework extends JFrame {
 			text.createNewFile();
 			text2.createNewFile();
 		
-			//needToFind is the string that is needed to be found
-			//needsChecking is the string that has been unchecked and will be checked later.
+
 			for (int counter =0;!needsChecking.isEmpty();counter++)
 			{
 				String needToFind = null;
 				if (needsChecking.contains(" ")){
 					needToFind = needsChecking.substring(0,needsChecking.indexOf(" "));
 					needsChecking = needsChecking.substring(needToFind.length()+1);
+					System.out.println(needToFind + "+++");
+					System.out.println(needsChecking+ "---");
 				} 
 
-			
-				
 				else 
 				{
 					needToFind = needsChecking.substring(0,needsChecking.length());
@@ -268,8 +225,8 @@ public class MainGuiFramework extends JFrame {
 
 				//This is just to test what string it needsToFind and
 				//What string that still needs checking.
-				//System.out.println(needToFind + " @ ");
-				//System.out.println(needsChecking + "!");
+				System.out.println(needToFind + " @ ");
+				System.out.println(needsChecking + "!");
 
 				Scanner input;
 				Scanner input2;
@@ -313,7 +270,7 @@ public class MainGuiFramework extends JFrame {
 		{
 			ex.printStackTrace();
 		}
-		//System.out.println(wordsExist);
+		System.out.println(wordsExist);
 
 		return wordsExist;
 	}
@@ -325,25 +282,22 @@ public class MainGuiFramework extends JFrame {
 	 */
 	public static boolean punctuation(String needsChecking)
 	{
-		if (needsChecking.length()>0){
-			if (needsChecking.substring(needsChecking.length()-1).equals("."))		
-			{
-				return true;
-			} else if (needsChecking.substring(needsChecking.length()-1).equals(","))
-			{
-				return true;
-			} else if (needsChecking.substring(needsChecking.length()-1).equals("!"))
-			{
-				return true;
-			} else if (needsChecking.substring(needsChecking.length()-1).equals("?"))
-			{
-				return true;
-			} else if (needsChecking.substring(needsChecking.length()-1).equals(";"))
-			{
-				return true;
-			}
+		if (needsChecking.substring(needsChecking.length()-1).equals("."))		
+		{
+			return true;
+		} else if (needsChecking.substring(needsChecking.length()-1).equals(","))
+		{
+			return true;
+		} else if (needsChecking.substring(needsChecking.length()-1).equals("!"))
+		{
+			return true;
+		} else if (needsChecking.substring(needsChecking.length()-1).equals("?"))
+		{
+			return true;
+		} else if (needsChecking.substring(needsChecking.length()-1).equals(";"))
+		{
+			return true;
 		}
-		
 
 		return false;
 
@@ -358,29 +312,6 @@ public class MainGuiFramework extends JFrame {
 		return needsWork;
 	}
 
-	//Sets commands. Called from deneb.
-	public static void setCommands()
-	{
-		commandsList.add("/commands");
-		commandsList.add("/search");
-		commandsList.add("/calculate");
-		commandsList.add("/calculatetb");
-		commandsList.add("/define");
-		commandsList.add("/terminate");
-		commandsList.add("/open");
-	}
-
-	//sets answer variable. Called from Deneb.
-	public static void setAnswer(double ans)
-	{
-		answer = ans;
-	}
-	
-	public static void setFriendship(int fr)
-	{
-		friendship = fr;
-	}
-	
 	/**
 	 * @param args the command line arguments
 	 */
