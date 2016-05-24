@@ -3,7 +3,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.image.*;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.border.*;
 
 
@@ -20,16 +24,44 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	public static int friendship;
 	public static int startupCount;
 	static ArrayList <String> commandsList = new ArrayList();
-	
+
 
 	/**Default Constructor
 	 * This constructor creates the GUI
 	 */
 	Deneb ()
 	{
+		try{
+			Scanner input = new Scanner(System.in);
+			File file = new File("./lib/FriendshipCounter.txt");
+			input = new Scanner(file);
+
+			String counter = input.nextLine();
+			int countedInt = Integer.parseInt(counter);
+			countedInt++;
+			FileWriter fw = new FileWriter(file);
+			BufferedWriter bw = new BufferedWriter(fw);
+			counter = Integer.toString(countedInt);
+			for (int i = 0; i< 1;i++)
+			{
+				bw.write(counter);
+				bw.newLine();
+			}
+			bw.close();
+			MainGuiFramework.setFriendship(countedInt);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		this.mainGUI();
+
 	}
 
+	Deneb (String userInput)
+	{
+
+	}
 
 
 	//|||||||||||||||||||||||||||||||||||End of Constructors |||||||||||||||||||||||||||||||||||||||||||||
@@ -43,18 +75,18 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	 * from the MainGuiFrameword class. This is done at the bottom by sending a
 	 * null String[].
 	 * 
-	 * This method also checks the friendship counter and the startup counter.
-	 * It does that by finding the file
+	 * edit: no longer is used. Build path was changed. 
+	 * 
 	 */
 	public void mainGUI() 
 	{
-		int lineNumber = 0;
-		String fileThing = null;
-		File text = new File("./res/counters.txt");
-		Scanner input;
+		//int lineNumber = 0;
+		//String fileThing = null;
+		//File text = new File("./res/counters.txt");
+		//Scanner input;
 		/*	try 
 		{
-		
+
 			text.createNewFile();
 			input = new Scanner(text);
 			for (int lineNumberCounter = 0; lineNumberCounter <= lineNumber && input.hasNextLine(); lineNumberCounter++)
@@ -86,7 +118,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 
 
 		 */ //Comment is for friendship and stuff. Implement later.
-		
+
 	}
 
 
@@ -94,28 +126,31 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	public void complexGrammarAnalyzer(){}
 
 
-	/**Scans for simple signs that could differentiate mathematical equations from strings. 
-	 * Chooses which way to go.
+	/**Scans for small distinctions. Haven't gotten to too much true analyzing, so still a WIP.
 	 * @param userInput
 	 */
-	public void simpleGrammarAnalyzer(String userInput) 
+	public String simpleGrammarAnalyzer(String userInput) 
 	{ 
-		if (easterEggDetector())
-		{
-			easterEggReturner(userInput);
-		} 
+		if (userInput.contains("yes"))
+			return "Ok. Try /commands";
+		else if (userInput.contains("you") && userInput.contains("like"))
+			return "I haven't thought about that yet. Sorry :)";
+		else if (userInput.contains("how") && (userInput.contains("are")|| userInput.contains("is")))
+			return "Pretty peppy";
+		else
+			return "I'm not quite sure I understand. I'll leave a note though for josh to fix it.";
+		
 
-		else if (terminateSequence(userInput))
-		{
-		} 
 
-		else if (commandLine(userInput))
-		{
-
-		}
 
 	}
 	//End of simpleGrammarAnalyzer method
+
+	public static String simpleActivator(String userInput)
+	{
+		Deneb usage = new Deneb(userInput);
+		return usage.simpleGrammarAnalyzer(userInput);
+	}
 
 
 
@@ -125,7 +160,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 	//|||||||||||||||||||||||||||||||||||Methods|||||||||||||||||||||||||||||||||||||||||||||||||||
 
-	
+
 	/*
 	 * List of Commands
 	 *  /Commands
@@ -136,24 +171,24 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	 *  /Define (GOOGLE DEF?)
 	 *  /Open (URL)
 	 */
-	
+
 	//Still WIP
 	//This should technically be void, because the commands are going in not to return anything. However,
 	//Some will return stuff, like calculate. Figure out how to implement
 	//WIP
 	public static void executeCommandLine(String userInput)
 	{
-	
-		
-		
+
+
+
 		if (userInput.equals("/commands"))
 		{
 			MainGuiFramework.setCommands();
 		} 
-		
+
 		else if (userInput.equals("/terminate"))
 		{
-	
+
 		}	
 		else if (userInput.equals("/calculatetb"))
 		{	
@@ -164,7 +199,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		{
 			openWebPage.googleSearch(userInput);
 		}
-	 
+
 		else if (userInput.substring(0,userInput.indexOf(" ")).equals("/calculate"))
 		{
 			System.out.println("YES");
@@ -182,9 +217,9 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		} 
 		else
 		{
-			
+
 		}
-		
+
 	}
 
 	//If the userInput contains a terminate sequence String, then terminate becomes true, and the program terminates.
@@ -207,17 +242,17 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		{
 			return true;
 		}
-		
+
 		if (userInput.equals("/terminate"))
 		{
 			return true;
 		}
-		
+
 		if (userInput.substring(0,1).equals("/"))
 		{
 			for (String item: commandsList)
 			{
-				
+
 				if(userInput.contains(" "))
 				{
 					if (userInput.substring(0,userInput.indexOf(" ")).equals(item))
@@ -230,10 +265,10 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 						return true;
 					}
 				}
-				
+
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -284,8 +319,8 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	{
 		return startupCount;
 	}
-	
-	
+
+
 	/**
 	 * Adds the commands into an ArrayList. Should be called at startup.
 	 * It could easily be initialized, but I put it in it's separate

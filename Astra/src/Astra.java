@@ -8,7 +8,7 @@
  */
 public abstract class Astra {
 	//Methods used for initiating
-	public abstract void simpleGrammarAnalyzer(String userInput);
+	public abstract String simpleGrammarAnalyzer(String userInput);
 	public abstract void complexGrammarAnalyzer();
 	public abstract void mainGUI();
 }

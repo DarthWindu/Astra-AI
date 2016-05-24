@@ -18,6 +18,7 @@ public class MainGuiFramework extends JFrame {
 
 	static ArrayList <String> commandsList = new ArrayList();
 	static double answer;
+	static int friendship;
 	/**
 	 * Creates new form Chatbox
 	 */
@@ -25,7 +26,7 @@ public class MainGuiFramework extends JFrame {
 		initComponents();
 		this.setTitle("Deneb");
 		String ini = this.chooseInitialSaying();
-		consoleOutputArea.setText("Hello, User!");
+		consoleOutputArea.setText(ini);
 		ImageIcon icon = new ImageIcon("./res/Denebhead.png");
 		this.setIconImage(icon.getImage());
 	}
@@ -35,7 +36,7 @@ public class MainGuiFramework extends JFrame {
 	 * Code for choosing what initial saying
 	 */
 	public String chooseInitialSaying(){
-		int lineNumber =0;
+		int lineNumber = friendship;
 		String fileThing = null;
 		File text = new File("./lib/Sayings.txt");
 		Scanner input;
@@ -92,7 +93,7 @@ public class MainGuiFramework extends JFrame {
 			}
 		});
 
-		ImageIcon im = new ImageIcon("./res/DenebSpriteIdle.jpg");
+		ImageIcon im = new ImageIcon("./res/DenebSpriteOne.png");
 		pictureLabel.setIcon(im); // NOI18N
 		pictureLabel.setToolTipText("");
 		pictureLabel.setName(""); // NOI18N
@@ -139,8 +140,9 @@ public class MainGuiFramework extends JFrame {
 	 * of nearly 600K words (Stored in 2 different text files) that would validate
 	 * whether words are spelled correctly or if words actually exist.
 	 * 
-	 * File location: G:/Downloads/words.txt
-	 * File location: G:/Downloads/words2.txt
+	 * File location home: G:/Downloads/words.txt
+	 * File location home: G:/Downloads/words2.txt
+	 * File location project: ./res/words.txt and ./res/words2.txt
 	 */
 	public void btnSendInputActionPerformed(java.awt.event.ActionEvent evt) {                                             
 		// TODO add your handling code here:
@@ -155,9 +157,12 @@ public class MainGuiFramework extends JFrame {
 			{
 				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
 				inputTextArea.setText("");
+				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: "+Deneb.simpleActivator(newText));
+
+				ImageIcon im = new ImageIcon("./res/DenebSpriteIdle.jpg");
+				pictureLabel.setIcon(im);
 			}
 			
-
 			
 			else if (Deneb.commandLine(newText))
 			{
@@ -167,6 +172,10 @@ public class MainGuiFramework extends JFrame {
 				
 				if (newText.equals("/commands"))
 				{
+					ImageIcon im = new ImageIcon("./res/DenebSpriteThinking.jpg");
+					pictureLabel.setIcon(im);
+					ImageIcon icon = new ImageIcon("./res/DenebSpriteThinking.png");
+					this.setIconImage(icon.getImage());
 					consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: " + commandsList);
 					consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb:\n/commands shows a list of commands,"
 							+"\n/search <insert what you want to search> will bring up a google search,"
@@ -365,6 +374,11 @@ public class MainGuiFramework extends JFrame {
 	public static void setAnswer(double ans)
 	{
 		answer = ans;
+	}
+	
+	public static void setFriendship(int fr)
+	{
+		friendship = fr;
 	}
 	
 	/**
