@@ -7,8 +7,8 @@ public class Academia {
 		String secondChunk = userInput.substring(userInput.indexOf("+")+1);
 		System.out.println(firstChunk);
 		System.out.println(secondChunk);
-		double FirstNumber =  Double.parseDouble(firstChunk); 
-		Double SecondNumber = Double.parseDouble(secondChunk);
+		double FirstNumber =  
+		double SecondNumber = Double.parseDouble(secondChunk);
 		System.out.println(Double.parseDouble(firstChunk));
 		System.out.println(SecondNumber);
 		double next = FirstNumber + SecondNumber;

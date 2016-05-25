@@ -195,17 +195,19 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 			String [] args = null;
 			tempoDeneb.main(args);
 		}
+		
+		else if (userInput.equals("/calculator"))
+		{
+			Calculator calc = new Calculator();
+			calc.launchCalculator();
+		} 
+		
 		else if (userInput.substring(0,userInput.indexOf(" ")).equals("/search"))
 		{
 			openWebPage.googleSearch(userInput);
 		}
 
-		else if (userInput.substring(0,userInput.indexOf(" ")).equals("/calculate"))
-		{
-			System.out.println("YES");
-			double answer = Academia.figureOutCalculation(userInput);
-			MainGuiFramework.setAnswer(answer);
-		} 
+		
 
 		else if (userInput.substring(0, userInput.indexOf(" ")).equals("/define"))
 		{
@@ -244,6 +246,11 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 		}
 
 		if (userInput.equals("/terminate"))
+		{
+			return true;
+		}
+		
+		if (userInput.equals("/calculator"))
 		{
 			return true;
 		}
@@ -330,7 +337,7 @@ public class Deneb extends Astra implements Entertania, Miscellania, Clubs
 	{
 		commandsList.add("/commands");
 		commandsList.add("/search");
-		commandsList.add("/calculate");
+		commandsList.add("/calculator");
 		commandsList.add("/calculatetb");
 		commandsList.add("/define");
 		commandsList.add("/terminate");

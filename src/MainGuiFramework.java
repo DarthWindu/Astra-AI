@@ -19,29 +19,16 @@ public class MainGuiFramework extends JFrame {
 	static ArrayList <String> commandsList = new ArrayList();
 	static double answer;
 	static int friendship;
-	
-	private String userName;
 	/**
 	 * Creates new form Chatbox
 	 */
 	public MainGuiFramework() {
 		initComponents();
-		this.setTitle("Deneb: " + System.getProperty("user.name"));
+		this.setTitle("Deneb");
 		String ini = this.chooseInitialSaying();
 		consoleOutputArea.setText(ini);
 		ImageIcon icon = new ImageIcon("./res/Denebhead.png");
 		this.setIconImage(icon.getImage());
-		userName = System.getProperty("user.name");
-	}
-	
-	public MainGuiFramework(User user) {
-		initComponents();
-		this.setTitle("Deneb: " + user.getSessionName());
-		String ini = this.chooseInitialSaying();
-		consoleOutputArea.setText(ini);
-		ImageIcon icon = new ImageIcon("./res/Denebhead.png");
-		this.setIconImage(icon.getImage());
-		userName = user.getUserName();
 	}
 
 
@@ -168,7 +155,7 @@ public class MainGuiFramework extends JFrame {
 
 			else if (wordChecker(newText))
 			{
-				consoleOutputArea.setText(consoleOutputArea.getText()+ "\n" + userName + ": " +newText);
+				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
 				inputTextArea.setText("");
 				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nDeneb: "+Deneb.simpleActivator(newText));
 
@@ -179,7 +166,7 @@ public class MainGuiFramework extends JFrame {
 			
 			else if (Deneb.commandLine(newText))
 			{
-				consoleOutputArea.setText(consoleOutputArea.getText()+ "\n"+userName+": "+newText);
+				consoleOutputArea.setText(consoleOutputArea.getText()+ "\nUser: "+newText);
 				inputTextArea.setText("");
 				Deneb.executeCommandLine(newText);
 				
@@ -221,7 +208,7 @@ public class MainGuiFramework extends JFrame {
 
 			else
 			{
-				consoleOutputArea.setText(consoleOutputArea.getText() + "\n"+userName+": " + newText);
+				consoleOutputArea.setText(consoleOutputArea.getText() + "\nUser: " + newText);
 				inputTextArea.setText("");
 			}
 		}
@@ -394,7 +381,10 @@ public class MainGuiFramework extends JFrame {
 		friendship = fr;
 	}
 	
-	public static void launch() {
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String args[]) {
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -424,46 +414,6 @@ public class MainGuiFramework extends JFrame {
 				new MainGuiFramework().setVisible(true);
 			}
 		});
-	}
-	
-	public static void launch(User user) {
-		/* Set the Nimbus look and feel */
-		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-		 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(MainGuiFramework.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(MainGuiFramework.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(MainGuiFramework.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(MainGuiFramework.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
-		//</editor-fold>
-
-		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new MainGuiFramework(user).setVisible(true);
-			}
-		});
-	}
-	
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String args[]) {
-		//launch();
-		LoginGUI.launch(LoginGUI.class);
 	}
 
 	// Variables declaration - do not modify                     

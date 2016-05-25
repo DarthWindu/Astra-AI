@@ -4,18 +4,12 @@ import java.io.File;
 public class User {
 	private final String userName;//User Name of person logged in
 	private String sessionName;//Displayed name of person logged in - can be changed.
-	//private File userConfig;
+	private File userConfig;
 		
 	User(String enteredUserName, File configFile) {
 		userName = enteredUserName;
 		sessionName = enteredUserName;
-		//userConfig = configFile;
-	}
-	
-	User(String enteredUserName) {
-		userName = enteredUserName;
-		sessionName = enteredUserName;
-		//userConfig = ;
+		userConfig = configFile;
 	}
 	
 	public String getUserName() {
@@ -26,8 +20,8 @@ public class User {
 		return sessionName;
 	}
 	
-	/*public File getUserConfigFile() {
+	public File getUserConfigFile() {
 		return userConfig;
-	}*/
+	}
 
 }
