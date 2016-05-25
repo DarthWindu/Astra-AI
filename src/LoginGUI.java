@@ -1,4 +1,4 @@
-package alphaComponents;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.JDialog;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -37,12 +39,13 @@ public class LoginGUI extends Application {
 	private Text outputMessage;
 	private Button btnCreateUser;
 	private Button btnGuestSI;
+	private Stage parentStage;
 	
 	private Charset utf8 = StandardCharsets.UTF_8;
 	
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Welcome to Deneb!");
-		
+		parentStage = primaryStage;
 		initGrid();
 		setScene(primaryStage);
 		
@@ -70,17 +73,41 @@ public class LoginGUI extends Application {
             public void handle(ActionEvent e) {
                 outputMessage.setFill(Color.FIREBRICK);
                 outputMessage.setText("Signing in...");
-                //Check if file exists. Check if username and password match. Open Deneb with username
+                signIn();
             }
         });
+	}
+	
+	private void forceClick_SignInButton() {
+		outputMessage.setFill(Color.FIREBRICK);
+        outputMessage.setText("Signing in...");
+        signIn();
 	}
 	
 	private void signIn() {
 		File user = new File("./lib/Users/" + userTextField.getText() + ".txt");
 		if (user.exists() && user.canRead()) {
 			List<String> lines = WriterTest1.readLines(user);
-			if (lines.get(0).equals(userTextField.getText()) && lines.get(1).equals(userTextField.getText())) {
-				
+			if (lines.get(0).equals(userTextField.getText()) && lines.get(1).equals(pwBox.getText())) {
+				MainGuiFramework.launch(new User(lines.get(0)));//Pass username to User
+				parentStage.close();
+			} else {
+				/*System.out.println(lines.get(0).equals(userTextField.getText()));
+				System.out.println(lines.get(1).equals(userTextField.getText()));*/
+				outputMessage.setText("Incorrect username or password");
+			}
+		} else {
+			JDialog dialog = new JDialog();
+			ChoiceContainer parentContainer = new ChoiceContainer();
+			dialog.setModal(true);
+			dialog.add(new CreateUserPanel(parentContainer));
+			dialog.pack();
+			dialog.setVisible(true);
+			
+			if (parentContainer.getUserSaysYes()) {
+				forceClick_CreateUserButton();
+			} else {
+				outputMessage.setText("");
 			}
 		}
 	}
@@ -107,10 +134,31 @@ public class LoginGUI extends Application {
         });
 	}
 	
+	private void forceClick_CreateUserButton() {
+		outputMessage.setFill(Color.BLACK);
+        outputMessage.setText("Creating User...");
+        createUser();
+	}
+	
+	private void signIn_Inquiry() {
+		JDialog dialog = new JDialog();
+		ChoiceContainer parentContainer = new ChoiceContainer();
+		dialog.setModal(true);
+		dialog.add(new SignInPanel(parentContainer));
+		dialog.pack();
+		dialog.setVisible(true);
+		
+		if (parentContainer.getUserSaysYes()) {
+			forceClick_SignInButton();
+		} else {
+			outputMessage.setText("");
+		}
+	}
+	
 	private void createUser() {
 		File user = new File("./lib/users/" + userTextField.getText() + ".txt");
 		if (user.exists() && user.canRead()) {
-			//Would you like to sign in Dialog
+			signIn_Inquiry();
 		} else if (!user.exists()) {
 			try {
 				user.createNewFile();
@@ -119,14 +167,13 @@ public class LoginGUI extends Application {
 					List<String> lines = Arrays.asList(userTextField.getText(), pwBox.getText());
 					Files.write(Paths.get(user.getPath()), lines, utf8);
 					        //  ./ indictates the parent folder to the current folder
+					outputMessage.setText("Creating user and signing in...");
+					signIn();
 				} catch (IOException e) {
 					outputMessage.setText("Could not create user. (IO Error. See troublshooting guide.)");
 				}catch(InvalidPathException invalidPath) {
 					outputMessage.setText("Could not create user. (Invalid Path Error. See troublshooting guide.)");
 				}
-				
-				outputMessage.setText("Creating user and signing in...");
-				//Open Deneb with User Name
 			} catch (IOException e) {
 				outputMessage.setText("Could not create user. (IO Error. See troublshooting guide.)");
 			}
@@ -134,7 +181,7 @@ public class LoginGUI extends Application {
 		}
 	}
 	
-	private void initGuestSIButton() {
+	private void initGuestSIButton() {//Works
 		btnGuestSI = new Button("Sign in as Guest");
 		HBox hbBtnGuestSI = new HBox(10);
 		hbBtnGuestSI.setAlignment(Pos.BOTTOM_RIGHT);
@@ -151,7 +198,8 @@ public class LoginGUI extends Application {
             public void handle(ActionEvent e) {
                 outputMessage.setFill(Color.BLUE);
                 outputMessage.setText("Signing in with default user...");
-                //Open with Default property
+                MainGuiFramework.launch();//Pass username to User
+				parentStage.close();
             }
         });
 	}
